@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>03_计算属性和监视</title>
+</head>
+<body>
+<!--
+1. 计算属性
+  在computed属性对象中定义计算属性的方法
+  在页面中使用{{方法名}}来显示计算的结果
+2. 监视属性:
+  通过通过vm对象的$watch()或watch配置来监视指定的属性
+  当属性变化时, 回调函数自动调用, 在函数内部进行计算
+3. 计算属性高级:
+  通过getter/setter实现对属性数据的显示和监视
+  计算属性存在缓存, 多次读取只执行一次getter计算
+-->
+<div id="demo">
+    <!--一有输入框就要想到  v-model=""  从data中取数据-->
+    姓: <input type="text" placeholder="First Name" v-model="firstName"><br>
+    名: <input type="text" placeholder="Last Name" v-model="lastName"><br>
+    <!--fullName1是根据fistName和lastName计算产生-->
+    <p>通过计算属性所得结果  语法：computed</p>
+    姓名1(单向): <input type="text" placeholder="Full Name1" v-model="fullName1"><br>
+    <p>通过监视属性所得结果  语法：watch</p>
+    姓名2(单向): <input type="text" placeholder="Full Name2" v-model="fullName2"><br>
+
+    姓名3(双向): <input type="text" placeholder="Full Name3" v-model="fullName3"><br>
+
+    <!--计算属性存在缓存, 多次读取只执行一次getter计算-->
+    <p>{{fullName1}}</p>
+    <p>{{fullName1}}</p>
+    <p>{{fullName1}}</p>
+</div>
+
+<script type="text/javascript" src="../js/vue.js"></script>
+<script type="text/javascript">
+    const vm = new Vue({
+        el: '#demo',
+        data: {/*初始化数据*/
+            firstName: 'A',
+            lastName: 'B',
+        },
+
+        // 计算属性: 值为对象
+        computed: {
+            //什么时候执行：初始化显示/相关data发生变化时；这些执行过程都是自动的；
+            //做什么的？计算并返回当前属性的值
+            fullName1() { // 属性的get()
+                console.log('fullName1()', this)
+                return this.firstName + '-' + this.lastName
+            },
+
+          fullName2(){
+            console.log('fullName1()', this)
+            return this.firstName + '-' + this.lastName
+          },
+
+            //双向数据绑定的应用与实现
+            fullName3:{
+              //回调函数的特点：1.你定义的 2.你没有调用 3.但最终他执行了
+              //对于回调函数我们应该知道两个事情：1.什么时候调用的  2.用来做什么的
+              //此回调函数 当需要读取当前属性值时回调， 计算并返回当前属性的值
+              get(){
+                return this.firstName + '-' + this.lastName
+              },
+
+              //此回调函数  监视当前属性值的变化  当属性值发生改变时回调 更新相关的属性数据
+              //监视函数
+              set(value){
+                //value  就是fullName3最新的属性值
+                var names= value.split('-')
+                this.firstName=names[0]
+                this.lastName=names[1]
+              }
+            }
+        },
+
+        //监视属性:
+        watch: {
+            //监视firstName属性是否发生了变化
+            firstName: function (value) {
+                console.log(this)//vm对象
+                this.fullName2 = value + '-' + this.lastName;
+            },
+            //监视lastName属性是否发生了变化  vm对象有自己的方法vm.$watch(),这个方法的效果等同于此处的方法
+            lastName: function (value) {
+                //更新 fullName2
+                this.fullName2 = this.firstName + '-' + value;
+            }
+        },
+    })
+
+    /*和监视属性的功能一致*/
+    /*vm.$watch('lastName',function (value) {
+      //更新 fullName2
+      this.fullName2 = this.firstName + '-' + value;
+    })*/
+
+</script>
+</body>
+</html>
