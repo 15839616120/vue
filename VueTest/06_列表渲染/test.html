@@ -16,9 +16,9 @@
 -->
 
 <div id="demo">
-  <h2>测试: v-for 遍历数组</h2>
+  <h2>测试: v-for 遍历数组【经常用】</h2>
   <ul>
-    <li v-for="(p, index) in persons" :key="index">
+    <li v-for="(p, index) in persons" :key="index"><!--（左边p，右边index）p表示当前遍历出来的对象，index表示当前对象所在数组中的索引   :key="index" 列表一般会把索引添加出来，方便之后使用-->
       {{index}}--{{p.name}}--{{p.age}}
       --<button @click="deleteP(index)">删除</button>
       --<button @click="updateP(index, {name:'Cat', age: 16})">更新</button>
@@ -26,10 +26,11 @@
   </ul>
   <button @click="addP({name: 'xfzhang', age: 18})">添加</button>
 
-  <h2>测试: v-for 遍历对象</h2>
+  <h2>测试: v-for 遍历对象【很少用】</h2>
 
   <ul>
-    <li v-for="(item, key) in persons[1]" :key="key">{{key}}={{item}}</li>
+    <!--key :对象的属性名  value：对象的属性值-->
+    <li v-for="(value, key) in persons[1]" :key="key">{{key}}={{value}}</li>
   </ul>
 
 </div>
@@ -48,17 +49,20 @@
     },
 
     methods: {
-      deleteP (index) {
-        this.persons.splice(index, 1) // 调用了不是原生数组的splice(), 而是一个变异(重写)方法
-              // 1. 调用原生的数组的对应方法
-              // 2. 更新界面
+      deleteP(index) {
+        console.log(this)
+        // this.persons.splice(index, length)  index :元素在数组中的下标，然后从这个下标开始计算，删除length个元素
+        this.persons.splice(index, 1)
       },
 
       updateP (index, newP) {
         console.log('updateP', index, newP)
-        // this.persons[index] = newP  // vue根本就不知道
+        // vue根本就不知道   vue本身只是监视了persons的改变，没有监视数组内部数据的改变，但是没有调用变异方法，因此vue不会发生改变。
+        //vue重写了数组中一系列改变数组内部数据的方法（先调用原生，更新界面）
+        // this.persons[index] = newP
+        // this.persons.splice(index, 1, newP)  index :元素在数组中的下标，然后从这个下标开始计算，删除length个元素，newP：新值
         this.persons.splice(index, 1, newP)
-        // this.persons = []
+        // this.persons = []  这个符合vue的要求，对象会为空
       },
 
       addP (newP) {
