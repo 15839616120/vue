@@ -6,6 +6,7 @@
 </head>
 <body>
 <!--
+  作用：控制一个标签是展示还是隐藏
 1. 条件渲染指令
   v-if
   v-else
@@ -22,6 +23,8 @@
   <p v-show="ok">求婚成功</p>
   <p v-show="!ok">求婚失败</p>
 
+
+  <!--这个地方也可以写函数去取值-->
   <button @click="ok=!ok">切换</button>
 </div>
 
