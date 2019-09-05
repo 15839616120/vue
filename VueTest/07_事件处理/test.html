@@ -28,9 +28,9 @@
   <button @click="test3('abcd', $event)">test3</button>
 
   <h2>2. 事件修饰符</h2>
-  <a href="http://www.baidu.com" @click.prevent="test4">百度一下</a>
+  <a href="http://www.baidu.com" @click.prevent="test4">百度一下</a><!-- 阻止事件的默认行为-->
   <div style="width: 200px;height: 200px;background: red" @click="test5">
-    <div style="width: 100px;height: 100px;background: blue" @click.stop="test6"></div>
+    <div style="width: 100px;height: 100px;background: blue" @click.stop="test6"></div><!--@click.stop : 停止事件冒泡 -->
   </div>
 
   <h2>3. 按键修饰符</h2>
@@ -44,7 +44,7 @@
   new Vue({
     el: '#example',
     data: {
-
+      //methods 里面的方法也可以写到这里来
     },
     methods: {
       test1(event) {
