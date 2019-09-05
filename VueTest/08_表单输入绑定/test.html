@@ -13,7 +13,7 @@
   select
 -->
 <div id="demo">
-  <form action="/xxx" @submit.prevent="handleSubmit">
+  <form action="/xxx" @submit.prevent="handleSubmit">  <!--阻止事件的默认行为  这里主要是为了测试用-->
     <span>用户名: </span>
     <input type="text" v-model="username"><br>
 
@@ -54,14 +54,17 @@
       username: '',
       pwd: '',
       sex: '男',
-      likes: ['foot'],
+      //likes: ['foot'],
+      likes: [],
       allCitys: [{id: 1, name: 'BJ'}, {id: 2, name: 'SS'}, {id: 3, name: 'SZ'}],
-      cityId: '2',
+      cityId: '',
+      //cityId: '2',
       info: ''
     },
     methods: {
       handleSubmit () {
         console.log(this.username, this.pwd, this.sex, this.likes, this.cityId, this.info)
+        //console.log(this.username, this.pwd)
         alert('提交注册的ajax请求')
       }
     }
