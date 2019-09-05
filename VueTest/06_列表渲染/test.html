@@ -26,8 +26,9 @@
   </ul>
   <button @click="addP({name: 'xfzhang', age: 18})">添加</button>
 
-  <h2>测试: v-for 遍历对象【很少用】</h2>
 
+
+  <h2>测试: v-for 遍历对象【很少用】</h2>
   <ul>
     <!--key :对象的属性名  value：对象的属性值-->
     <li v-for="(value, key) in persons[1]" :key="key">{{key}}={{value}}</li>
