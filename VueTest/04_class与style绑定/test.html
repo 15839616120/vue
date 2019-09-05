@@ -1,23 +1,29 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>04_class与style绑定</title>
-  <style>
-    .classA {
-      color: red;
-    }
-    .classB {
-      background: blue;
-    }
-    .classC {
-      font-size: 20px;
-    }
-  </style>
+    <meta charset="UTF-8">
+    <title>04_class与style绑定</title>
+    <!--css代码-->
+    <style>
+        .classA {
+            color: red;
+        }
+
+        .classB {
+            color: blue;
+        }
+
+        .classC {
+            font-size: 60px;
+        }
+    </style>
 </head>
 <body>
 
 <!--
+两种控制样式的方式：
+第一种：通过class控制样式
+第二种：通过style控制样式
 1. 理解
   在应用界面中, 某个(些)元素的样式是变化的
   class/style绑定就是专门用来实现动态样式效果的技术
@@ -31,40 +37,49 @@
 -->
 
 <div id="demo">
-  <h2>1. class绑定: :class='xxx'</h2>
-  <p :class="myClass">xxx是字符串</p>
-  <p :class="{classA: hasClassA, classB: hasClassB}">xxx是对象</p>
-  <p :class="['classA', 'classB']">xxx是数组</p>
+    <h2>两种控制样式的方式： 第一种：通过class控制样式 第二种：通过style控制样式</h2>
+    <h2>1. class绑定: :class='xxx'</h2>
+    <!--
+    class绑定: :class='xxx'
+    xxx是字符串 【用的较多】
+    xxx是对象   【用的较多】
+    xxx是数组   【用的较少】  -->
+    <!--
+    class="classC"  静态数据
+    :class="a"  动态数据-->
+    <p class="classC" :class="a">xxx是字符串</p>
+    <p :class="{classA: isA, classB: isB}">xxx是对象</p>
+    <p :class="['classA', 'classB']">xxx是数组[用的较少]</p>
 
-  <h2>2. style绑定</h2>
-  <p :style="{color:activeColor, fontSize}">:style="{ color: activeColor, fontSize: fontSize + 'px' }"</p>
+    <h2>2. style绑定</h2>
+    <p :style="{color: activeColor, fontSize: fontSize + 'px'}">style绑定</p>
 
-  <button @click="update">更新</button>
+    <button @click="update">更新</button>
 
 </div>
 
 <script type="text/javascript" src="../js/vue.js"></script>
 <script type="text/javascript">
-  new Vue({
-    el: '#demo',
-    data: {
-      myClass: 'classA',
-      hasClassA: true,
-      hasClassB: false,
-      activeColor: 'red',
-      fontSize: '20px'
-    },
+    new Vue({
+        el: '#demo',/*配置对象，管理标签内的区域*/
+        data: {
+            a: 'classA',
+            isA: true,
+            isB: false,
+            activeColor: 'red',
+            fontSize: '20'
+        },
 
-    methods: {
-      update () {
-        this.myClass = 'classB'
-        this.hasClassA = !this.hasClassA
-        this.hasClassB = !this.hasClassB
-        this.activeColor = 'yellow'
-        this.fontSize = '30px'
-      }
-    }
-  })
+        methods: {
+            update() {
+                this.a = 'classB'
+                this.isA = false
+                this.isB = true
+                this.activeColor = 'green'
+                this.fontSize = '70'
+            }
+        }
+    })
 </script>
 </body>
 </html>
