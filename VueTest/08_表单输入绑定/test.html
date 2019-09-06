@@ -13,7 +13,7 @@
   select
 -->
 <div id="demo">
-  <form action="/xxx" @submit.prevent="handleSubmit">  <!--阻止事件的默认行为  这里主要是为了测试用-->
+  <form action="/xxx" @submit.prevent="handleSubmit">  <!--.prevent 阻止事件的默认行为  这里主要是为了测试用-->
     <span>用户名: </span>
     <input type="text" v-model="username"><br>
 
