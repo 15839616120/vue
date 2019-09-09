@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>09_Vue实例_生命周期</title>
+    <meta charset="UTF-8">
+    <title>09_Vue实例_生命周期</title>
 </head>
 <body>
 <!--
@@ -21,43 +21,48 @@
 2. 常用的生命周期方法
   created()/mounted(): 发送ajax请求, 启动定时器等异步任务
   beforeDestory(): 做收尾工作, 如: 清除定时器
+
+  生命周期的回调函数叫做勾子函数
 -->
 
 <div id="test">
-  <button @click="destroyVue">destory vue</button>
-  <p v-if="isShow">尚硅谷IT教育</p>
+    <button @click="destroyVue">destory vm对象</button>
+    <p v-show="isShow">自学 vue对象的生命周期</p>
 </div>
 
 <script type="text/javascript" src="../js/vue.js"></script>
 <script type="text/javascript">
-  new Vue({
-    el: '#test',
-    data: {
-      isShow: true
-    },
+    new Vue({
+        el: '#test',
+        data: {
+            isShow: true
+        },
 
-    mounted () {
-      // 执行异步任务
-      this.intervalId = setInterval(() => {
-        console.log('-----')
-        this.isShow = !this.isShow
-      }, 1000)
-    },
+        /*初始化显示之后立即调用  调用一次【常用】*/
+        mounted() {
+            /* setInterval(function () {
 
-    beforeDestroy() {
-      console.log('beforeDestroy()')
-      // 执行收尾的工作
-      clearInterval(this.intervalId)
-    },
+             })*/
+            /* ()=>这个函数可以保证this就是当前vm对象*/
+            this.intervalId = setInterval(() => {
+                this.isShow = !this.isShow
+            }, 1000)
+        },
 
-    methods: {
-      destroyVue () {
-        this.$destroy()
-      }
-    }
-  })
+        /*死亡之前调用一次【常用】*/
+        beforeDestroy() {
+            console.log('beforeDestroy()')
+            // 执行收尾的工作  如果不执行定时器一致在运作，会导致内存泄露
+            clearInterval(this.intervalId)
+        },
 
-
+        methods: {
+            //干掉vm对象
+            destroyVue() {
+                this.$destroy()
+            }
+        }
+    })
 </script>
 </body>
 </html>
